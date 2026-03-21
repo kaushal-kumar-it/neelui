@@ -18,18 +18,61 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code }) => {
   };
 
   return (
-    <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#1e1e1e', width: '100%', boxSizing: 'border-box' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.5rem 1rem', backgroundColor: '#2d2d2d', alignItems: 'center' }}>
-        <span style={{ color: '#ccc', fontSize: '0.8rem' }}>TSX</span>
-        <button onClick={handleCopy} style={{ background: copied ? '#4ade80' : '#444', color: copied ? '#000' : '#fff', border: 'none', borderRadius: '4px', padding: '4px 8px', cursor: 'pointer' }}>
-          {copied ? 'Copied!' : 'Copy Code'}
+    <div
+      style={{
+        position: 'relative',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        backgroundColor: '#0b0b0d',
+        width: '100%',
+        boxSizing: 'border-box',
+        border: '1px solid #27272a',
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.35)',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '0.65rem 0.9rem',
+          background: 'linear-gradient(90deg, #18181b 0%, #111827 55%, #1f1d2b 100%)',
+          alignItems: 'center',
+          borderBottom: '1px solid #27272a',
+          gap: '0.75rem',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span style={{ width: '10px', height: '10px', borderRadius: '999px', backgroundColor: '#ef4444' }} />
+          <span style={{ width: '10px', height: '10px', borderRadius: '999px', backgroundColor: '#f59e0b' }} />
+          <span style={{ width: '10px', height: '10px', borderRadius: '999px', backgroundColor: '#22c55e' }} />
+          <span style={{ color: '#d4d4d8', fontSize: '0.75rem', marginLeft: '0.4rem', letterSpacing: '0.08em' }}>TSX</span>
+        </div>
+
+        <button
+          onClick={handleCopy}
+          style={{
+            background: copied ? '#4ade80' : '#27272a',
+            color: copied ? '#052e16' : '#f4f4f5',
+            border: '1px solid #3f3f46',
+            borderRadius: '8px',
+            padding: '6px 10px',
+            cursor: 'pointer',
+            fontSize: '0.74rem',
+            fontWeight: 600,
+          }}
+        >
+          {copied ? 'Copied' : 'Copy'}
         </button>
       </div>
+
       <div style={{ overflowX: 'auto', maxWidth: '100%', width: '100%', boxSizing: 'border-box', WebkitOverflowScrolling: 'touch' }}>
         <SyntaxHighlighter
           language="tsx"
           style={vscDarkPlus}
-          customStyle={{ margin: 0, padding: '1rem 1.25rem', fontSize: '0.85rem', minWidth: '100%' }}
+          showLineNumbers
+          wrapLongLines={false}
+          customStyle={{ margin: 0, padding: '0.95rem 1rem', fontSize: '0.8rem', minWidth: '100%', background: '#0b0b0d' }}
+          lineNumberStyle={{ minWidth: '2em', color: '#52525b' }}
         >
           {code}
         </SyntaxHighlighter>

@@ -12,25 +12,48 @@ import { GlowingBorderButton } from '@/stories/buttons/glowingborderbutton';
 import { MagneticButton } from '@/stories/buttons/magneticbutton';
 import { GradientBorderCard } from '@/stories/cards/gradientbordercard';
 import { InteractiveDots } from '@/stories/background/interactivedots';
-import { StarsBackground } from '@/components/StarsBackground';
+import { StarsBackground as DemoStarsBackground } from '@/stories/background/starsbackground';
 import { SpotlightGrid } from '@/stories/background/spotlightgrid';
 import { SlidingTabs } from '@/stories/navbar/slidingtabs';
 import { componentCode } from '@/data/coderegistry';
 import { FloatingDock } from '@/stories/navbar/floatingdock';
 import { FluidNav } from '@/stories/navbar/fluidnav';
+import { BentoGrid } from '@/stories/layout/bentogrid';
+import { InfiniteScrollMarquee } from '@/stories/layout/infinitescrollmarquee';
+import { CommandPalette } from '@/stories/modal/commandpalette';
+import { GlowingSpotlightInput } from '@/stories/forms/glowingspotlightinput';
+import { StickyScrollReveal } from '@/stories/scroll/stickyscrollreveal';
+import { StackedToastNotifications } from '@/stories/feedback/stackedtoastnotifications';
+import { WordByWordScrollReveal } from '@/stories/scroll/wordbywordscrollreveal';
+import { AnimatedNumberCounter } from '@/stories/data/animatednumbercounter';
+import { BeforeAfterComparisonSlider } from '@/stories/media/beforeaftercomparisonslider';
+import { MagneticCustomCursor } from '@/stories/cursor/magneticcustomcursor';
 const NAV_ITEMS = [
   { label: 'NAVIGATION', isGroup: true },
   { id: 'slidingtabs', label: 'Sliding Pill Tabs' },
   { id: 'floatingdock', label: 'Mac Floating Dock' },
   { id: 'fluidnav', label: 'Fluid Navigation' },
+  { label: 'LAYOUT', isGroup: true },
+  { id: 'bentogrid', label: 'The Bento Grid' },
+  { id: 'marquee', label: 'Infinite Scroll Marquee' },
+  { id: 'stickyscroll', label: 'Sticky Scroll Reveal' },
+  { label: 'MODAL / FORMS', isGroup: true },
+  { id: 'commandpalette', label: 'Command Palette' },
+  { id: 'spotlightinput', label: 'Glowing Spotlight Input' },
   { label: 'TEXT EFFECTS', isGroup: true },
   { id: 'typewriter', label: 'Typewriter' },
   { id: 'filltext', label: 'Liquid Fill' },
   { id: 'scramble', label: 'Scramble' },
+  { id: 'wordreveal', label: 'Word-by-Word Scroll Reveal' },
   { label: 'BUTTONS', isGroup: true },
   { id: 'dotexpand', label: 'Dot Expand' },
   { id: 'glowingborder', label: 'Glowing Border' },
   { id: 'magnetic', label: 'Magnetic' },
+  { label: 'FEEDBACK / MEDIA', isGroup: true },
+  { id: 'stackedtoast', label: 'Stacked Toast Notifications' },
+  { id: 'numbercounter', label: 'Animated Number Counter' },
+  { id: 'beforeafter', label: 'Before/After Slider' },
+  { id: 'magneticcursor', label: 'Magnetic Custom Cursor' },
   { label: 'CARDS', isGroup: true },
   { id: 'gradientcard', label: 'Gradient Border Card' },
   { label: 'BACKGROUNDS', isGroup: true },
@@ -197,7 +220,7 @@ export default function ComponentsPage() {
                     content: (
                       <div className="w-full max-w-[300px]">
                         <h4 className="text-white font-bold mb-4">About Neel UI</h4>
-                        <p className="text-zinc-400 text-sm mb-4">We build the most premium, copy-paste React components on the internet.</p>
+                        <p className="text-zinc-400 text-sm mb-4">Reusable React components designed for modern interfaces.</p>
                         <button className="w-full bg-white text-black font-semibold py-2 rounded-lg">View Open Roles</button>
                       </div>
                     )
@@ -207,6 +230,170 @@ export default function ComponentsPage() {
             </div>
           </Showcase>
         )}
+        {activePage === 'bentogrid' && (
+          <Showcase
+            title="The Bento Grid"
+            description="An asymmetrical feature grid with mixed card spans."
+            codeString={componentCode.bentoGrid}
+            props={[
+              { name: 'cards', type: 'BentoCard[]', description: 'Card list containing id, title, description, and optional className.' },
+            ]}
+          >
+            <BentoGrid
+              cards={[
+                { id: '1', title: 'Fast', description: 'Built for speed and smooth interactions.', className: 'sm:col-span-2' },
+                { id: '2', title: 'Accessible', description: 'Keyboard-first and readable defaults.' },
+                { id: '3', title: 'Customizable', description: 'Composable with Tailwind classes.' },
+                { id: '4', title: 'Production Ready', description: 'Copy and paste directly.', className: 'sm:col-span-2 lg:col-span-1 lg:row-span-2' },
+                { id: '5', title: 'Type Safe', description: 'Typed props for a better DX.', className: 'sm:col-span-2' },
+              ]}
+            />
+          </Showcase>
+        )}
+
+        {activePage === 'marquee' && (
+          <Showcase
+            title="Infinite Scroll Marquee"
+            description="An endless logo/content strip that pauses on hover."
+            codeString={componentCode.infiniteScrollMarquee}
+            props={[
+              { name: 'items', type: 'string[]', description: 'List of labels to render in the marquee.' },
+              { name: 'speedSeconds', type: 'number', description: 'Duration for one full loop.' },
+            ]}
+          >
+            <InfiniteScrollMarquee items={['React', 'Next.js', 'TypeScript', 'Tailwind', 'Storybook', 'Motion']} speedSeconds={18} />
+          </Showcase>
+        )}
+
+        {activePage === 'commandpalette' && (
+          <Showcase
+            title="Command Palette (Cmd/Ctrl + K)"
+            description="Keyboard-first search modal for quick navigation."
+            codeString={componentCode.commandPalette}
+            props={[
+              { name: 'items', type: 'CommandItem[]', description: 'Command rows with title/subtitle and optional callback.' },
+              { name: 'placeholder', type: 'string', description: 'Input placeholder text.' },
+            ]}
+          >
+            <CommandPalette
+              items={[
+                { id: 'components', title: 'Open Components', subtitle: 'Browse all UI patterns' },
+                { id: 'docs', title: 'Open Docs', subtitle: 'Read setup and API usage' },
+                { id: 'github', title: 'Open GitHub', subtitle: 'View repository source' },
+              ]}
+            />
+          </Showcase>
+        )}
+
+        {activePage === 'spotlightinput' && (
+          <Showcase
+            title="Glowing Spotlight Input"
+            description="Input with a cursor-following neon glow."
+            codeString={componentCode.glowingSpotlightInput}
+            props={[
+              { name: 'placeholder', type: 'string', description: 'Input placeholder text.' },
+            ]}
+          >
+            <GlowingSpotlightInput placeholder="Search components, docs, commands..." />
+          </Showcase>
+        )}
+
+        {activePage === 'stickyscroll' && (
+          <Showcase
+            title="Sticky Scroll Reveal"
+            description="Sticky left panel with synchronized scrolling content on the right."
+            codeString={componentCode.stickyScrollReveal}
+            props={[
+              { name: 'sections', type: 'StickySection[]', description: 'Array of section objects containing title and description.' },
+            ]}
+          >
+            <StickyScrollReveal
+              sections={[
+                { title: 'Plan', description: 'Define the component API and composition boundaries.' },
+                { title: 'Build', description: 'Implement reusable blocks with responsive defaults.' },
+                { title: 'Ship', description: 'Validate in real pages and publish confidently.' },
+              ]}
+            />
+          </Showcase>
+        )}
+
+        {activePage === 'stackedtoast' && (
+          <Showcase
+            title="Stacked Toast Notifications"
+            description="Stacked feedback toasts with depth and quick dismissal."
+            codeString={componentCode.stackedToastNotifications}
+            props={[]}
+          >
+            <StackedToastNotifications />
+          </Showcase>
+        )}
+
+        {activePage === 'wordreveal' && (
+          <Showcase
+            title="Word-by-Word Scroll Reveal"
+            description="Text appears progressively as scroll position advances."
+            codeString={componentCode.wordByWordScrollReveal}
+            props={[
+              { name: 'text', type: 'string', description: 'The sentence that reveals word by word.' },
+            ]}
+          >
+            <WordByWordScrollReveal text="Every scroll step reveals intent, context, and clarity for your users." />
+          </Showcase>
+        )}
+
+        {activePage === 'numbercounter' && (
+          <Showcase
+            title="Animated Number Counter"
+            description="Counts from 0 to target when entering the viewport."
+            codeString={componentCode.animatedNumberCounter}
+            props={[
+              { name: 'target', type: 'number', description: 'Final value to animate to.' },
+              { name: 'label', type: 'string', description: 'Optional helper text below the number.' },
+              { name: 'durationMs', type: 'number', description: 'Animation duration in milliseconds.' },
+              { name: 'suffix', type: 'string', description: 'Optional trailing unit like % or +.' },
+            ]}
+          >
+            <AnimatedNumberCounter target={12500} suffix="+" label="Developers onboarded" durationMs={1500} />
+          </Showcase>
+        )}
+
+        {activePage === 'beforeafter' && (
+          <Showcase
+            title="Image Before/After Comparison Slider"
+            description="Drag slider to compare two visual states."
+            codeString={componentCode.beforeAfterComparisonSlider}
+            props={[
+              { name: 'beforeSrc', type: 'string', description: 'Before image URL.' },
+              { name: 'afterSrc', type: 'string', description: 'After image URL.' },
+              { name: 'alt', type: 'string', description: 'Accessible alt text base label.' },
+            ]}
+          >
+            <BeforeAfterComparisonSlider
+              beforeSrc="/window.svg"
+              afterSrc="/globe.svg"
+              alt="Code setup"
+            />
+          </Showcase>
+        )}
+
+        {activePage === 'magneticcursor' && (
+          <Showcase
+            title="Magnetic Custom Cursor"
+            description="Custom cursor layer for premium micro-interactions."
+            codeString={componentCode.magneticCustomCursor}
+            props={[
+              { name: 'children', type: 'React.ReactNode', description: 'Interactive content wrapped by the cursor layer.' },
+            ]}
+          >
+            <MagneticCustomCursor>
+              <div className="w-full rounded-2xl border border-zinc-800 bg-zinc-950/70 p-8 text-center">
+                <p className="text-zinc-300 mb-4">Move your mouse in this panel.</p>
+                <button className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black">Hover Target</button>
+              </div>
+            </MagneticCustomCursor>
+          </Showcase>
+        )}
+
         {activePage === 'slidingtabs' && (
           <Showcase
             title="Sliding Pill Tabs"
@@ -390,7 +577,7 @@ export default function ComponentsPage() {
             props={[]}
           >
             <div className="relative h-64 md:h-[400px] w-full rounded-2xl overflow-hidden border border-zinc-800 flex flex-col items-center justify-center">
-              <StarsBackground />
+              <DemoStarsBackground />
               <div className="z-10 text-center pointer-events-none">
                 <h3 className="text-2xl md:text-4xl font-bold text-white tracking-widest uppercase mb-2 drop-shadow-lg">Hyperspace</h3>
                 <p className="text-zinc-300 text-sm md:text-base drop-shadow-md">Light speed engaged.</p>

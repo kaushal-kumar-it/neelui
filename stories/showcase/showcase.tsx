@@ -24,11 +24,12 @@ export const Showcase: React.FC<ShowcaseProps> = ({ title, description, codeStri
   const hasProps = propList.length > 0;
 
   const tabStyle = (tab: 'preview' | 'code' | 'docs') => ({
-    padding: '0.75rem 1.25rem',
+    padding: '0.65rem 0.95rem',
     background: 'transparent',
     border: 'none',
     cursor: 'pointer',
-    fontSize: '0.875rem',
+    fontSize: '0.82rem',
+    whiteSpace: 'nowrap' as const,
     color: activeTab === tab ? '#fff' : '#71717a',
     borderBottom: activeTab === tab ? '2px solid #fff' : '2px solid transparent',
   });
@@ -38,15 +39,15 @@ export const Showcase: React.FC<ShowcaseProps> = ({ title, description, codeStri
       <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#fff' }}>{title}</h2>
       <p style={{ color: '#a1a1aa', marginBottom: '1.5rem' }}>{description}</p>
 
-      <div style={{ border: '1px solid #27272a', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#09090b', width: '100%', boxSizing: 'border-box' }}>
-        <div style={{ display: 'flex', borderBottom: '1px solid #27272a', backgroundColor: '#18181b' }}>
+      <div style={{ border: '1px solid #27272a', borderRadius: '10px', overflow: 'hidden', backgroundColor: '#09090b', width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', borderBottom: '1px solid #27272a', backgroundColor: '#18181b', overflowX: 'auto' }}>
           <button onClick={() => setActiveTab('preview')} style={tabStyle('preview')}>Preview</button>
           <button onClick={() => setActiveTab('code')} style={tabStyle('code')}>Code</button>
           <button onClick={() => setActiveTab('docs')} style={tabStyle('docs')}>Docs</button>
         </div>
 
         {activeTab === 'preview' && (
-          <div style={{ padding: '4rem 2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
+          <div style={{ padding: '1.25rem 0.9rem', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '240px' }}>
             {children}
           </div>
         )}

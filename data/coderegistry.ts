@@ -1,3 +1,5 @@
+import { extendedComponentCode } from './coderegistry/extended';
+
 export const componentCode = {
   typewriter: `
 import React, { useState, useEffect } from 'react';
@@ -770,7 +772,7 @@ export const SlidingTabs: React.FC<SlidingTabsProps> = ({
 };`,
 floatingDockFull: `'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface DockItemProps {
   label: string;
@@ -783,7 +785,7 @@ interface FloatingDockProps {
 }
 
 export const FloatingDock: React.FC<FloatingDockProps> = ({ items }) => {
-  const [mouseX, setMouseX] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [isTouchLike, setIsTouchLike] = useState(false);
 
   useEffect(() => {
@@ -798,16 +800,21 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({ items }) => {
 
   return (
     <div
-      onMouseMove={(e) => {
-        if (!isTouchLike) {
-          setMouseX(e.clientX);
-        }
-      }}
-      onMouseLeave={() => setMouseX(null)}
+      onMouseLeave={() => setActiveIndex(null)}
       className="flex h-14 md:h-16 max-w-full items-end gap-1.5 md:gap-2 rounded-2xl bg-zinc-950/80 px-2.5 md:px-3 pb-1.5 md:pb-2 backdrop-blur-md border border-zinc-800 shadow-2xl overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
       {items.map((item, idx) => (
-        <DockIcon key={idx} item={item} mouseX={mouseX} isTouchLike={isTouchLike} />
+        <DockIcon
+          key={idx}
+          item={item}
+          isTouchLike={isTouchLike}
+          isActive={activeIndex === idx}
+          onActivate={() => {
+            if (!isTouchLike) {
+              setActiveIndex(idx);
+            }
+          }}
+        />
       ))}
     </div>
   );
@@ -815,39 +822,25 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({ items }) => {
 
 const DockIcon = ({
   item,
-  mouseX,
+  isActive,
+  onActivate,
   isTouchLike,
 }: {
   item: DockItemProps;
-  mouseX: number | null;
+  isActive: boolean;
+  onActivate: () => void;
   isTouchLike: boolean;
 }) => {
-  const ref = useRef<HTMLAnchorElement>(null);
-
-  let scale = 1;
-  const maxDistance = isTouchLike ? 110 : 150;
-  const maxScale = isTouchLike ? 1.18 : 1.5;
   const baseSize = isTouchLike ? 34 : 40;
-
-  if (mouseX !== null && ref.current) {
-    const rect = ref.current.getBoundingClientRect();
-    const iconCenterX = rect.left + rect.width / 2;
-    const distance = Math.abs(mouseX - iconCenterX);
-
-    if (distance < maxDistance) {
-      scale = 1 + ((maxDistance - distance) / maxDistance) * (maxScale - 1);
-    }
-  }
-
-  const size = baseSize * scale;
+  const size = baseSize * (isActive ? 1.18 : 1);
 
   return (
     <a
-      ref={ref}
       href={item.href || '#'}
       aria-label={item.label}
+      onMouseEnter={onActivate}
       style={{ width: size, height: size }}
-      className="group relative shrink-0 flex items-center justify-center rounded-lg md:rounded-xl bg-zinc-800 transition-all duration-200 ease-out hover:bg-zinc-700"
+      className="group relative shrink-0 flex items-center justify-center rounded-lg md:rounded-xl bg-zinc-800 transition-all duration-200 ease-out hover:bg-zinc-700 hover:cursor-pointer"
     >
       {!isTouchLike && (
         <span className="absolute -top-10 left-1/2 -translate-x-1/2 scale-0 rounded-md bg-zinc-900 border border-zinc-800 px-2 py-1 text-xs text-white opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100 whitespace-nowrap">
@@ -912,7 +905,7 @@ export const FluidNav: React.FC<FluidNavProps> = ({ items }) => {
                 setActiveId((current) => (current === item.id ? null : item.id));
               }
             }}
-            className="shrink-0 px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-zinc-300 transition-colors hover:text-white"
+            className="shrink-0 px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-zinc-300 transition-colors hover:text-white hover:cursor-pointer"
             aria-expanded={activeId === item.id}
           >
             {item.label}
@@ -946,5 +939,5 @@ export const FluidNav: React.FC<FluidNavProps> = ({ items }) => {
       </div>
     </nav>
   );
-};`
+};`,  ...extendedComponentCode,
 } as const;

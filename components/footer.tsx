@@ -7,15 +7,14 @@ const footerSections = [
   {
     title: 'Product',
     links: [
-      { label: 'Components', href: '#' },
-      { label: 'Documentation', href: '#' },
-      { label: 'Updates', href: '#' },
+      { label: 'Components', href: '/components' },
+      { label: 'Documentation', href: '/docs' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { label: 'Support', href: '#' },
+      { label: 'Support', href: '/formsfree' },
     ],
   },
   {
@@ -38,12 +37,12 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 font-bold text-lg text-foreground mb-4">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-secondary flex items-center justify-center text-accent-foreground font-bold">
-                T
+                N
               </div>
-              Tailwind UI
+              Neel UI
             </Link>
             <p className="text-sm text-muted-foreground mb-6">
-              Premium React components built with Tailwind CSS for modern web development.
+              Modern React UI components for fast product development.
             </p>
             <div className="flex gap-4">
               <Link
@@ -91,7 +90,7 @@ export default function Footer() {
 
         <div className="border-t border-border/30 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2024 Tailwind UI. All rights reserved.
+            © 2026 Neel UI. All rights reserved.
           </p>
         
         </div>

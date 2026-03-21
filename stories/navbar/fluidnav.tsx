@@ -50,7 +50,7 @@ export const FluidNav: React.FC<FluidNavProps> = ({ items }) => {
                 setActiveId((current) => (current === item.id ? null : item.id));
               }
             }}
-            className="shrink-0 px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-zinc-300 transition-colors hover:text-white"
+            className="shrink-0 px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-zinc-300 transition-colors hover:text-white hover:cursor-pointer"
             aria-expanded={activeId === item.id}
           >
             {item.label}
