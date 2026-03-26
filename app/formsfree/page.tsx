@@ -13,6 +13,22 @@ export default function SupportPage() {
     event.preventDefault();
     const form = event.currentTarget;
 
+    // Rate-limit: prevent manual spam by requiring 30s between submissions.
+    try {
+      const LAST_SUBMIT_KEY = 'neel_last_support_submit';
+      const last = Number(localStorage.getItem(LAST_SUBMIT_KEY) || '0');
+      const delta = Date.now() - last;
+      const LIMIT_MS = 30_000; // 30 seconds
+      if (delta < LIMIT_MS) {
+        const wait = Math.ceil((LIMIT_MS - delta) / 1000);
+        setStatus('error');
+        setMessage(`Please wait ${wait} second${wait > 1 ? 's' : ''} before sending another request.`);
+        return;
+      }
+    } catch {
+      // localStorage may be unavailable in some environments — fail open.
+    }
+
     if (!FORMSFREE_ENDPOINT) {
       setStatus('error');
       setMessage('Missing NEXT_PUBLIC_FORMSFREE_ENDPOINT environment variable.');
@@ -43,7 +59,12 @@ export default function SupportPage() {
 
       setStatus('success');
       setMessage('Your support request has been sent. We will get back to you soon.');
-      form.reset();
+      try {
+        form.reset();
+      } catch {}
+      try {
+        localStorage.setItem('neel_last_support_submit', String(Date.now()));
+      } catch {}
     } catch (error) {
       setStatus('error');
       if (error instanceof Error && error.message) {
